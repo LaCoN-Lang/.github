@@ -1,0 +1,3 @@
+# «LaCoN» Programming Language
+
+Lorem ipsum dolor ...
