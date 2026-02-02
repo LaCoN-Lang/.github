@@ -1,3 +1,4 @@
+(Will be in future, currently in early dev)
 ## The Programming Language
 
 **LaCoN** is an embeddable, multi-paradigm, data-and-scripting-oriented language designed to bridge the gap between structured information and executable logic.<br>
