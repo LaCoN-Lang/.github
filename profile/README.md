@@ -28,20 +28,25 @@ entity-name: <String> // Explicit type annotation used
 entity-description?: <String>
 energy<Dictionary>: {
 	// Using inbuilt physical units types
-	// Unicode symbols are allowed, × === *, ÷ === /
-	power-reproduction<Expr>: <Power> × delta <Time>
+	power-reproduction: <Power>
 	fuel<Dictionary>: {
 		// Restricted set of allowed values specified
 		type: <String> of ("solid" | "liquid" | "gas") 
+		// Consumption rate
+		// if 5kg / 1min then consumption
+		// → per second, this consumes 0.0833… kg
+		// → per tick, it consumes a portion depending on tick duration
+		//	 for example, if the tick is 6 seconds, it consumes 0.5 kg
+		// Unicode symbols are allowed, × === *, ÷ === /
 		consumption<Expr>: <Mass> ÷ delta <Time>
 		// “?” marks optional keys
-    // <Dictionary[]> marks an Array of Dictionaries
+		// <Dictionary[]> marks an Array of Dictionaries
 		emission<Dictionary[]>?: [
 			// “*” marks repeatable elements
 			{compound: <String>, per-consumption: <Mass>}*
 		]
 	}
-	heat-generation<Expr>?: <Temperature> ÷ delta <Time>
+	heat-generation<Expr>?: <Energy> ÷ delta <Time>
 }
 craft<Dictionary[]>: [
 	{component: <String>, count: <Int>}*
@@ -66,8 +71,8 @@ use schema './energy_generator.slacon'
 	entity-name: solar-generator-mk1
 	entity-description: Базовый солнечный генератор для малых станций
 	energy: {
-		power-reproduction: 50W × 1min
-		heat-generation: 1°C ÷ 1min
+		power-reproduction: 50W
+		heat-generation: 1kJ / 1min // ≈16.67W OR +≈1°C
 	}
 	craft: [
 		{component: metal-plate, count: 10},
@@ -85,7 +90,7 @@ use schema './energy_generator.slacon'
 	entity-name: coal-generator
 	entity-description: Угольный генератор средней мощности для промышленного использования
 	energy: {
-		power-reproduction: 200W × 1min
+		power-reproduction: 200W
 		fuel: {
 			type: solid
 			consumption: 5kg ÷ 1min
@@ -94,7 +99,7 @@ use schema './energy_generator.slacon'
 				{compound: SO2, per-consumption: 0.5kg}
 			]
 		}
-		heat-generation: 150°C ÷ 1min
+		heat-generation: 150kJ / 1min
 	}
 	craft: [
 		{component: steel-plate, count: 20},
@@ -112,7 +117,7 @@ use schema './energy_generator.slacon'
 	entity-name: steam-generator
 	entity-description: Паровой генератор средней мощности для промышленных и энергетических нужд
 	energy: {
-		power-reproduction: 150W × 1min
+		power-reproduction: 150W
 		fuel: {
 			type: liquid
 			consumption: 3L ÷ 1min
@@ -120,7 +125,7 @@ use schema './energy_generator.slacon'
 				{compound: H2O, per-consumption: 3L}
 			]
 		}
-		heat-generation: 120°C ÷ 1min
+		heat-generation: 120kJ / 1min
 	}
 	craft: [
 		{component: steel-plate, count: 15},
