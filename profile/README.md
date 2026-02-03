@@ -55,7 +55,8 @@ craft-time: <Time>
 cost<Dictionary>: {requisition: <Number>, energy: <Number>}
 size<Dictionary>: {L: <Length>, W: <Length>, H: <Length>}
 weight: <Mass>
-durability: <Number>
+// Max durability is 65_535
+durability: <UInt16>
 ```
 **File**: `energy_generators.llacon`<br>
 This file consumes `schema` to build a list of generators.
